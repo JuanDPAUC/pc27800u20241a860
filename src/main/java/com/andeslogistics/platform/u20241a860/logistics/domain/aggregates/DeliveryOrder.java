@@ -31,18 +31,19 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
         this.priorityLevel = priorityLevel;
         this.deliveryStatus = deliveryStatus;
         this.deliveryNotes = deliveryNotes;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = Objects.requireNonNull(createdAt);
+        this.updatedAt = Objects.requireNonNull(updatedAt);
     }
 
-    public static DeliveryOrder create(DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant createdAt, Instant updatedAt) {
+    public static DeliveryOrder create(DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant now) {
 
-        var deliveryOrder = new DeliveryOrder(null, deliveryCode, warehouseId, deliveryWindow, priorityLevel, deliveryStatus, deliveryNotes, createdAt, updatedAt);
-        deliveryOrder.registerEvent(new DeliveryOrderCreatedEvent(deliveryCode.value(), warehouseId.value(), createdAt()));
+        var deliveryOrder = new DeliveryOrder(null, deliveryCode, warehouseId, deliveryWindow, priorityLevel, deliveryStatus, deliveryNotes, now, now);
+        deliveryOrder.registerEvent(new DeliveryOrderCreatedEvent(deliveryCode.value(), now));
         return deliveryOrder;
     }
 
     private static Instant createdAt() {
+        return Instant.now();
     }
 
     public static DeliveryOrder rehydrate(Long id, DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant createdAt, Instant updatedAt) {

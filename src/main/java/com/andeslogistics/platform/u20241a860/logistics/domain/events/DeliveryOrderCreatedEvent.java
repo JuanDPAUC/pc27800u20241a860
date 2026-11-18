@@ -5,6 +5,10 @@ import com.andeslogistics.platform.u20241a860.shared.domain.events.DomainEvent;
 import java.time.Instant;
 import java.util.UUID;
 
-public record DeliveryOrderCreatedEvent(String deliveryCode, UUID warehouseId, Instant ocurredAt) implements DomainEvent {
+public record DeliveryOrderCreatedEvent(String deliveryCode, Instant ocurredAt) implements DomainEvent {
 
+    @Override
+    public Instant occurredAt() {
+        return null;
+    }
 }
