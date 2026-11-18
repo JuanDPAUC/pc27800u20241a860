@@ -96,7 +96,4 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
         return updatedAt;
     }
 
-
-    public DeliveryOrderJpaEntity getPackageLoad() {
-    }
 }
