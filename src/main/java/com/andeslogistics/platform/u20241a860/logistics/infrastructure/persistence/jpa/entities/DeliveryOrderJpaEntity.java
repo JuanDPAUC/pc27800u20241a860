@@ -2,6 +2,9 @@ package com.andeslogistics.platform.u20241a860.logistics.infrastructure.persiste
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
+import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "delivery_orders", uniqueConstraints = @UniqueConstraint(name = "uk_delivery_order_delivery_code", columnNames = "delivery_code"))
@@ -17,6 +20,10 @@ public class DeliveryOrderJpaEntity {
     private String packageLowQuantity;
     @Column(name = "package_low_unit", nullable = false)
     private String packageLowUnit;
+    @Column(name = "delivery_window_start", nullable = false)
+    private LocalDate deliveryWindowStart;
+    @Column(name = "delivery_window_end", nullable = false)
+    private LocalDate deliveryWindowEnd;
     @Column(name = "priority_level", nullable = false)
     private int priorityLevel;
     @Enumerated(EnumType.STRING)
@@ -31,5 +38,67 @@ public class DeliveryOrderJpaEntity {
 
 
     protected DeliveryOrderJpaEntity() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getDeliveryCode() {
+        return deliveryCode;
+    }
+
+    public String getWarehouseId() {
+        return warehouseId;
+    }
+
+    public String getPackageLowQuantity() {
+        return packageLowQuantity;
+    }
+
+    public String getPackageLowUnit() {
+        return packageLowUnit;
+    }
+
+    public LocalDate getDeliveryWindowStart() {
+        return deliveryWindowStart;
+    }
+
+    public LocalDate getDeliveryWindowEnd() {
+        return deliveryWindowEnd;
+    }
+
+    public int getPriorityLevel() {
+        return priorityLevel;
+    }
+
+    public String getDeliveryStatus() {
+        return deliveryStatus;
+    }
+
+    public String getDeliveryNotes() {
+        return deliveryNotes;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public DeliveryOrderJpaEntity(Long id, String deliveryCode, String warehouseId, String packageLowQuantity, String packageLowUnit, LocalDate deliveryWindowStart, LocalDate deliveryWindowEnd, int priorityLevel, String deliveryStatus, String deliveryNotes) {
+        this.id = id;
+        this.deliveryCode = deliveryCode;
+        this.warehouseId = warehouseId;
+        this.packageLowQuantity = packageLowQuantity;
+        this.packageLowUnit = packageLowUnit;
+        this.deliveryWindowStart = deliveryWindowStart;
+        this.deliveryWindowEnd = deliveryWindowEnd;
+        this.priorityLevel = priorityLevel;
+        this.deliveryStatus = deliveryStatus;
+        this.deliveryNotes = deliveryNotes;
+    }
+
 
 }

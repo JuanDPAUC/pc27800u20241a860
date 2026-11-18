@@ -8,15 +8,18 @@ import org.springframework.stereotype.Component;
 public class DeliveryOrderPersistenceMapper {
     public DeliveryOrderJpaEntity toEntity(DeliveryOrder deliveryOrder) {
         return new DeliveryOrderJpaEntity(
-                deliveryOrder.id(),
-                deliveryOrder.deliveryCode(),
-                deliveryOrder.warehouseId(),
-                deliveryOrder.deliveryWindow(),
-                deliveryOrder.priorityLevel(),
-                deliveryOrder.deliveryStatus(),
-                deliveryOrder.deliveryNotes(),
-                deliveryOrder.createdAt(),
-                deliveryOrder.updatedAt()
+                deliveryOrder.getId(),
+                deliveryOrder.getDeliveryCode().value().toString(),
+                deliveryOrder.getWarehouseId().value().toString(),
+                deliveryOrder.getPackageLoad().getPackageLowQuantity().value().toString(),
+                deliveryOrder.getDeliveryWindow().getPackageLowUnit().value().toString(),
+                deliveryOrder.getDeliveryWindow().getDeliveryWindowStart(),
+                deliveryOrder.getDeliveryWindow().getDeliveryWindowEnd(),
+                deliveryOrder.getPriorityLevel(),
+                deliveryOrder.getDeliveryStatus().value().toString(),
+                deliveryOrder.getDeliveryNotes(),
+                deliveryOrder.getCreatedAt(),
+                deliveryOrder.getUpdatedAt()
         );
     }
 

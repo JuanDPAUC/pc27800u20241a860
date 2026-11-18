@@ -1,7 +1,7 @@
 package com.andeslogistics.platform.u20241a860.shared.domain.aggregates;
 
 
-import com.meditrack.platform.u201621873.shared.domain.events.DomainEvent;
+import com.andeslogistics.platform.u20241a860.shared.domain.events.DomainEvent;
 
 import java.util.ArrayList;
 import java.util.List;
