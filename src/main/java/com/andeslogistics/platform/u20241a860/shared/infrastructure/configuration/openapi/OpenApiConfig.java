@@ -14,13 +14,13 @@ import org.springframework.context.annotation.Configuration;
 public class OpenApiConfig {
 
     @Bean
-    public OpenAPI meditrackPlatformApi() {
+    public OpenAPI andesLogisticsPlatformApi() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Meditrack Platform API")
+                        .title("Andes Logistics Platform API")
                         .version("1.0.0")
-                        .description("REST API documentation for the Meditrack Platform bounded context.")
-                        .contact(new Contact().name("Meditrack Platform Team"))
+                        .description("REST API documentation for the Andes Logistics Platform bounded context.")
+                        .contact(new Contact().name("Andes Logistics Platform Team"))
                         .license(new License().name("MIT License")
                                 .url("https://opensource.org/licenses/MIT")));
     }
