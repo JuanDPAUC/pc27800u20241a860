@@ -12,7 +12,7 @@ public class DeliveryOrderPersistenceMapper {
                 deliveryOrder.getDeliveryCode().value().toString(),
                 deliveryOrder.getWarehouseId().value().toString(),
                 deliveryOrder.getPackageLoad().getPackageLowQuantity().value().toString(),
-                deliveryOrder.getDeliveryWindow().getPackageLowUnit().value().toString(),
+                deliveryOrder.getPackageLoad().getPackageLowUnit().value().toString(),
                 deliveryOrder.getDeliveryWindow().getDeliveryWindowStart(),
                 deliveryOrder.getDeliveryWindow().getDeliveryWindowEnd(),
                 deliveryOrder.getPriorityLevel(),

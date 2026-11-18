@@ -3,7 +3,9 @@ package com.andeslogistics.platform.u20241a860.logistics.domain.aggregates;
 import com.andeslogistics.platform.u20241a860.logistics.domain.events.DeliveryOrderCreatedEvent;
 import com.andeslogistics.platform.u20241a860.logistics.domain.model.DeliveryCode;
 import com.andeslogistics.platform.u20241a860.logistics.domain.model.DeliveryWindow;
+import com.andeslogistics.platform.u20241a860.logistics.domain.model.PackageLoad;
 import com.andeslogistics.platform.u20241a860.logistics.domain.model.WarehouseId;
+import com.andeslogistics.platform.u20241a860.logistics.infrastructure.persistence.jpa.entities.DeliveryOrderJpaEntity;
 import com.andeslogistics.platform.u20241a860.shared.domain.aggregates.AbstractDomainAggregateRoot;
 import com.andeslogistics.platform.u20241a860.shared.domain.valueobjects.DeliveryStatus;
 
@@ -16,6 +18,7 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
     private final DeliveryCode deliveryCode;
     private final WarehouseId warehouseId;
     private final DeliveryWindow deliveryWindow;
+    private final PackageLoad packageLoad;
     private final int priorityLevel;
     private final DeliveryStatus deliveryStatus;
     private final String deliveryNotes;
@@ -23,11 +26,12 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
     private final Instant updatedAt;
 
 
-    public DeliveryOrder(Long id, DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant createdAt, Instant updatedAt) {
+    public DeliveryOrder(Long id, DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, PackageLoad packageLoad, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.deliveryCode = Objects.requireNonNull(deliveryCode);
         this.warehouseId = Objects.requireNonNull(warehouseId);
         this.deliveryWindow = Objects.requireNonNull(deliveryWindow);
+        this.packageLoad = packageLoad;
         this.priorityLevel = priorityLevel;
         this.deliveryStatus = deliveryStatus;
         this.deliveryNotes = deliveryNotes;
@@ -37,7 +41,7 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
 
     public static DeliveryOrder create(DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant now) {
 
-        var deliveryOrder = new DeliveryOrder(null, deliveryCode, warehouseId, deliveryWindow, priorityLevel, deliveryStatus, deliveryNotes, now, now);
+        var deliveryOrder = new DeliveryOrder(null, deliveryCode, warehouseId, deliveryWindow, null, priorityLevel, deliveryStatus, deliveryNotes, now, now);
         deliveryOrder.registerEvent(new DeliveryOrderCreatedEvent(deliveryCode.value(), now));
         return deliveryOrder;
     }
@@ -46,9 +50,9 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
         return Instant.now();
     }
 
-    public static DeliveryOrder rehydrate(Long id, DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant createdAt, Instant updatedAt) {
+    public static DeliveryOrder rehydrate(Long id, DeliveryCode deliveryCode, WarehouseId warehouseId, DeliveryWindow deliveryWindow, PackageLoad packageLoad, int priorityLevel, DeliveryStatus deliveryStatus, String deliveryNotes, Instant createdAt, Instant updatedAt) {
         if (id == null || id <=0)  throw new IllegalArgumentException("Invalid delivery order ID");
-        return new DeliveryOrder(id, deliveryCode, warehouseId, deliveryWindow, priorityLevel, deliveryStatus, deliveryNotes, createdAt, updatedAt);
+        return new DeliveryOrder(id, deliveryCode, warehouseId, deliveryWindow, packageLoad, priorityLevel, deliveryStatus, deliveryNotes, createdAt, updatedAt);
     }
 
 
@@ -62,6 +66,10 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
 
     public WarehouseId getWarehouseId() {
         return warehouseId;
+
+    }
+    public PackageLoad getPackageLoad() {
+        return packageLoad;
     }
 
     public DeliveryWindow getDeliveryWindow() {
@@ -89,5 +97,6 @@ public final class DeliveryOrder extends AbstractDomainAggregateRoot {
     }
 
 
-
+    public DeliveryOrderJpaEntity getPackageLoad() {
+    }
 }
